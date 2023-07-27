@@ -1,0 +1,659 @@
+openapi: 3.0.3
+info:
+  title: VK API - OpenAPI 3.0
+  description: |-
+    This is a sample VK API based on the OpenAPI 3.0 specification
+    
+    Some useful links:
+    - [The source API definition for the VK](https://github.com/KseniyaRomanchik/social_network_system_design/api/rest_api.yaml)
+  contact:
+    email: ks.romanchik@gmail.com
+  version: 1.0.0
+externalDocs:
+  description: Full system design
+  url: https://github.com/KseniyaRomanchik/social_network_system_design
+servers:
+  - url: https://abc.com
+tags:
+  - name: profile
+    description: User profile
+  - name: friends
+    description: User friends
+  - name: chats
+    description: User chats
+  - name: posts
+    description: Posts
+  - name: media
+    description: Media files
+paths:
+  /profile/{id}:
+    get:
+      tags:
+        - profile
+      summary: Get user profile
+      description: Get user profile
+      operationId: getProfile
+      parameters:
+        - name: id
+          in: path
+          description: Profile id
+          required: true
+          explode: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'   
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Profile not found
+        '500':
+          description: Internal Server Error
+  /profile/{id}/friend:
+    post:
+      tags:
+        - friends
+      summary: Add friend to profile
+      description: Add friend to profile
+      operationId: addFriend
+      parameters:
+        - name: id
+          in: path
+          description: Profile id
+          required: true
+          explode: true
+          schema:
+            type: string
+        - name: authorization
+          in: header
+          description: Authorization header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/Friend'
+      responses:
+        '200':
+          description: Successful adding
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Friend' 
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal Server Error
+      security:
+        - vk_auth:
+            - read:friend
+            - write:friend
+    get:
+      tags:
+        - friends
+      summary: Get list of friends
+      description: Get list of friends
+      operationId: getFriends
+      parameters:
+        - name: id
+          in: path
+          description: Profile id
+          required: true
+          explode: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful getting
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Friend' 
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal Server Error
+  /profile/{id}/friend/{fid}:
+    delete:
+      tags:
+        - friends
+      summary: Delete friend from profile
+      description: Delete friend from profile
+      operationId: deleteFriend
+      parameters:
+        - name: id
+          in: path
+          description: Profile id
+          required: true
+          explode: true
+          schema:
+            type: string
+        - name: fid
+          in: path
+          description: Friend profile id
+          required: true
+          explode: true
+          schema:
+            type: string
+        - name: authorization
+          in: header
+          description: Authorization header
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Successful deleting
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal Server Error
+      security:
+        - vk_auth:
+            - write:friend
+            - read:friend
+  /media:
+    post:
+      tags:
+        - media
+      summary: Load meadia file
+      description: Load meadia file
+      operationId: loadMedia
+      parameters:
+        - name: Content Type
+          in: header
+          description: Content-Type
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Media'          
+        '400':
+          description: Invalid status value
+        '500':
+          description: Internal Server Error
+      security:
+        - bearer: []
+  /post:
+    post:
+      tags:
+        - posts
+      summary: Create post
+      description: Create post
+      operationId: createPost
+      parameters:
+        - name: authorization
+          in: header
+          description: Authorization header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/Post'
+      responses:
+        '200':
+          description: Successful creating
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post' 
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal Server Error
+      security:
+        - vk_auth:
+          - write:post
+          - read:post
+    get:
+      tags:
+        - posts
+      summary: Get feed
+      description: Get feed
+      operationId: getFeed
+      parameters:
+        - name: profile_id
+          in: query
+          description: Profile id
+          required: true
+          explode: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful creating
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Post' 
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal Server Error
+  /post/{id}:
+    get:
+      tags:
+        - posts
+      summary: Get post
+      description: Get post
+      operationId: getPost
+      parameters:
+        - name: id
+          in: path
+          description: Post id
+          required: true
+          explode: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful creating
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post' 
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal Server Error
+            
+  /profile/{id}/chat:
+    post:
+      tags:
+        - chats
+      summary: Create chat
+      description: Create chat
+      operationId: createChat
+      parameters:
+        - name: id
+          in: path
+          description: Profile id
+          required: true
+          explode: true
+          schema:
+            type: string
+        - name: authorization
+          in: header
+          description: Authorization header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/Chat'
+      responses:
+        '200':
+          description: Successful creating
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Chat' 
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal Server Error
+      security:
+        - vk_auth:
+          - write:chat
+          - read:chat
+    get:
+      tags:
+        - chats
+      summary: Get chat list
+      description: Get chat list
+      operationId: getChats
+      parameters:
+        - name: id
+          in: path
+          description: Profile id
+          required: true
+          explode: true
+          schema:
+            type: string
+        - name: authorization
+          in: header
+          description: Authorization header
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful creating
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Chat' 
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal Server Error
+      security:
+        - vk_auth:
+          - read:chats
+  /profile/{id}/chat/{cid}:
+    get:
+      tags:
+        - chats
+      summary: Get chat with last messages
+      description: Get chat with last messages
+      operationId: getChat
+      parameters:
+        - name: id
+          in: path
+          description: Profile id
+          required: true
+          explode: true
+          schema:
+            type: string
+        - name: cid
+          in: path
+          description: Chat id
+          required: true
+          explode: true
+          schema:
+            type: string
+        - name: authorization
+          in: header
+          description: Authorization header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful creating
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Chat' 
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal Server Error
+      security:
+        - vk_auth:
+          - read:chat
+  /profile/{id}/chat/{cid}/message:
+    post:
+      tags:
+        - chats
+      summary: Send message to chat
+      description: Send message to chat
+      operationId: sendMessage
+      parameters:
+        - name: id
+          in: path
+          description: Profile id
+          required: true
+          explode: true
+          schema:
+            type: string
+        - name: cid
+          in: path
+          description: Chat id
+          required: true
+          explode: true
+          schema:
+            type: string
+        - name: authorization
+          in: header
+          description: Authorization header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/Message'
+        required: true
+      responses:
+        '200':
+          description: Successful creating
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message' 
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal Server Error
+      security:
+        - vk_auth:
+          - write:message
+          - read:chat
+
+components:
+  schemas:
+    Friend:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 123
+        name:
+          type: string
+          example: Karol
+        photo:
+          type: string
+          example: image_1234.jpg
+    Post:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 123
+        body:
+          type: string
+          example: Post body
+        profile_id:
+          type: string
+          example: 123
+        media:
+          type: array
+          items:
+            $ref: '#/components/schemas/Media'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    Profile:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 123
+        name:
+          type: string
+          example: Jan
+        sex:
+          type: string
+          example: man
+          enum:
+            - man
+            - woman
+        birth_date:
+          type: string
+          format: date-time
+        online:
+          type: boolean
+        friends:
+          type: array
+          items:
+            $ref: '#/components/schemas/Friend'
+        feed:
+          type: array
+          items:
+            $ref: '#/components/schemas/Post'
+    
+    Media:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 123
+        name:
+          type: string
+          example: image_123.jpg
+        created_at:
+          type: string
+          format: date-time
+        size:
+          type: object
+          properties:
+            width:
+              type: integer
+              format: int16
+              example: 321
+            height:
+              type: integer
+              format: int16
+              example: 1234
+    Chat:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 123
+        profiles:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: 123
+              name:
+                type: string
+                example: Jan
+              photo:
+                type: string
+                example: image_123.jpg
+              online:
+                type: boolean
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    Message:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 123
+        body:
+          type: string
+          example: message body
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        read_at:
+          type: string
+          format: date-time
+        profile_id:
+          type: string
+          example: 123
+  requestBodies:
+    Friend:
+      description: Friend object for adding to a profile
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+                example: 123
+    Post:
+      description: Post object for creating a new item
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              body:
+                type: string
+                example: post body
+              profile_id:
+                type: string
+                example: 123
+    Chat:
+      description: Chat object for creating a new item
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              profiles:
+                type: array
+                items:
+                  type: string
+                  example: 123
+    Message:
+      description: Message object for creating a new item
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              chat_id:
+                type: string
+                example: 123
+              profile_id:
+                type: string
+                example: 123
+              body:
+                type: string
+                example: message body
+  securitySchemes:
+    vk_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://test
+          scopes:
+            read:profile: get profile info
+            read:friend: get list of friends
+            write:friend: add or delete friends to profile
+            write:media: load media file
+            write:post: create posts
+            read:post: get post and feed
+            write:message: add message to chat
+            write:chat: create and delete chat
+            read:chat: get chat info and messages
+    bearer:
+      type: http
+      scheme: bearer
