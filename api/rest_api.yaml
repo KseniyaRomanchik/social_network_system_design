@@ -69,12 +69,6 @@ paths:
           explode: true
           schema:
             type: string
-        - name: authorization
-          in: header
-          description: Authorization header
-          required: true
-          schema:
-            type: string
       requestBody:
         $ref: '#/components/requestBodies/Friend'
       responses:
@@ -141,12 +135,6 @@ paths:
           explode: true
           schema:
             type: string
-        - name: authorization
-          in: header
-          description: Authorization header
-          required: true
-          schema:
-            type: string
       responses:
         '204':
           description: Successful deleting
@@ -200,13 +188,6 @@ paths:
       summary: Create post
       description: Create post
       operationId: createPost
-      parameters:
-        - name: authorization
-          in: header
-          description: Authorization header
-          required: true
-          schema:
-            type: string
       requestBody:
         $ref: '#/components/requestBodies/Post'
       responses:
@@ -293,12 +274,6 @@ paths:
           explode: true
           schema:
             type: string
-        - name: authorization
-          in: header
-          description: Authorization header
-          required: true
-          schema:
-            type: string
       requestBody:
         $ref: '#/components/requestBodies/Chat'
       responses:
@@ -328,12 +303,6 @@ paths:
           description: Profile id
           required: true
           explode: true
-          schema:
-            type: string
-        - name: authorization
-          in: header
-          description: Authorization header
-          required: false
           schema:
             type: string
       responses:
@@ -374,12 +343,6 @@ paths:
           explode: true
           schema:
             type: string
-        - name: authorization
-          in: header
-          description: Authorization header
-          required: true
-          schema:
-            type: string
       responses:
         '200':
           description: Successful creating
@@ -414,12 +377,6 @@ paths:
           description: Chat id
           required: true
           explode: true
-          schema:
-            type: string
-        - name: authorization
-          in: header
-          description: Authorization header
-          required: true
           schema:
             type: string
       requestBody:
@@ -608,6 +565,10 @@ components:
               profile_id:
                 type: string
                 example: 123
+              media_ids:
+                type: array
+                items:
+                  type: integer
     Chat:
       description: Chat object for creating a new item
       required: true
