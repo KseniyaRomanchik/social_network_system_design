@@ -1,0 +1,16 @@
+Table cassandra.message {
+  part_key int [not null]
+  id "bigint unsigned" [not null]
+  chat_id integer [not null]
+  chat_name integer [not null]
+  profile_id integer [not null]
+  profile_name varchar [not null]
+  profile_photo varchar
+  body varchar [not null]
+  read_at timestamp
+  created_at timestamp
+
+  indexes {
+    (part_key, chat_id, created_at) [pk]
+  }
+}
