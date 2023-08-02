@@ -1,5 +1,5 @@
 Table cassandra.message {
-  part_key int [not null]
+  day int [not null]
   id "bigint unsigned" [not null]
   chat_id integer [not null]
   chat_name integer [not null]
@@ -12,5 +12,20 @@ Table cassandra.message {
 
   indexes {
     (part_key, chat_id, created_at) [pk]
+  }
+}
+
+Table cassandra.comment {
+  day int [not null]
+  id "bigint unsigned" [not null]
+  post_id integer [not null]
+  profile_id integer [not null]
+  profile_name varchar [not null]
+  profile_photo varchar
+  body varchar [not null]
+  created_at timestamp
+
+  indexes {
+    (day, chat_id, created_at) [pk]
   }
 }

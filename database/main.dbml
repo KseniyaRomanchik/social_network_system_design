@@ -26,17 +26,6 @@ Table post {
   }
 }
 
-Table comment {
-  id "bigint unsigned" [primary key, increment]
-  post_id integer [not null, ref: > post.id]
-  profile_id integer [not null, ref: > profile.id]
-  body varchar [not null]
-
-  indexes {
-    (post_id) [name: 'comment_post_id_idx']
-  }
-}
-
 Table media {
   id "bigint unsigned" [primary key, increment]
   post_id integer [not null, ref: > post.id]
