@@ -2,7 +2,7 @@
 // Docs: https://dbml.dbdiagram.io/docs
 
 Table profile {
-  id "bigint unsigned" [primary key, increment]
+  id bigint [primary key, increment]
   name varchar [not null]
   about varchar
   photo varchar
@@ -10,14 +10,14 @@ Table profile {
 }
 
 Table interest {
-  id "bigint unsigned" [primary key, increment]
+  id bigint [primary key, increment]
   name varchar [not null, unique]
 }
 
 Table post {
-  id "bigint unsigned" [primary key, increment]
+  id bigint [primary key, increment]
   body text [not null, note: 'Content of the post']
-  profile_id integer [not null, ref: > profile.id]
+  profile_id bigint [not null, ref: > profile.id]
   like_counter integer
   view_counter integer
 
@@ -27,8 +27,8 @@ Table post {
 }
 
 Table media {
-  id "bigint unsigned" [primary key, increment]
-  post_id integer [not null, ref: > post.id]
+  id bigint [primary key, increment]
+  post_id bigint [not null, ref: > post.id]
   type media_type [not null]
 
   indexes {
@@ -37,14 +37,14 @@ Table media {
 }
 
 Table hashtag {
-  id "bigint unsigned" [primary key, increment]
+  id bigint [primary key, increment]
   name varchar [unique, not null]
 }
 
 Table profile_interest {
-  id "bigint unsigned" [primary key, increment]
-  profile_id "bigint unsigned" [not null, ref: > profile.id]
-  interest_id "bigint unsigned" [not null, ref: > interest.id]
+  id bigint [primary key, increment]
+  profile_id bigint [not null, ref: > profile.id]
+  interest_id bigint [not null, ref: > interest.id]
 
   indexes {
     (interest_id, profile_id) [name: 'profile_interest_interest_id_profile_id_unq', unique]
@@ -52,9 +52,9 @@ Table profile_interest {
 }
 
 Table post_hashtag {
-  id "bigint unsigned" [primary key, increment]
-  hashtag_id "bigint unsigned" [not null, ref: > hashtag.id]
-  post_id "bigint unsigned" [not null, ref: > post.id]
+  id bigint [primary key, increment]
+  hashtag_id bigint [not null, ref: > hashtag.id]
+  post_id bigint [not null, ref: > post.id]
 
   indexes {
     (post_id, hashtag_id) [name: 'post_hashtag_post_id_hashtag_id_unq', unique]
@@ -62,14 +62,14 @@ Table post_hashtag {
 }
 
 Table chat {
-  id "bigint unsigned" [primary key, increment]
+  id bigint [primary key, increment]
   name varchar [not null]
 }
 
 Table chat_profile {
-  id integer [primary key, unique]
-  profile_id integer [not null, ref: > profile.id]
-  chat_id integer [not null, ref: > chat.id]
+  id bigint [primary key, unique]
+  profile_id bigint [not null, ref: > profile.id]
+  chat_id bigint [not null, ref: > chat.id]
 
   indexes {
     (profile_id, chat_id) [unique, name: 'chat_profile_profile_id_chat_id_unq']
