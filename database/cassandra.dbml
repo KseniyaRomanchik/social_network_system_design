@@ -16,8 +16,6 @@ Table cassandra.message {
   chat_id integer [not null]
   chat_name integer [not null]
   profile_id integer [not null]
-  profile_name varchar [not null]
-  profile_photo varchar
   body varchar [not null]
   read_at timestamp
   created_at timestamp
@@ -32,8 +30,6 @@ Table cassandra.comment {
   id bigint [not null]
   post_id integer [not null]
   profile_id integer [not null]
-  profile_name varchar [not null]
-  profile_photo varchar
   body varchar [not null]
   created_at timestamp
 
