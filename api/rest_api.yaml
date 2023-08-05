@@ -27,6 +27,7 @@ tags:
     description: Media files
 paths:
   /profile/{id}:
+  # 7638 rps read  
     get:
       tags:
         - profile
@@ -55,6 +56,7 @@ paths:
         '500':
           description: Internal Server Error
   /profile/{id}/friend:
+  # 30 rps write  
     post:
       tags:
         - friends
@@ -86,6 +88,7 @@ paths:
         - vk_auth:
             - read:friend
             - write:friend
+  # 764 rps read  
     get:
       tags:
         - friends
@@ -147,6 +150,7 @@ paths:
             - write:friend
             - read:friend
   /media:
+  # 9 rps write
     post:
       tags:
         - media
@@ -182,6 +186,7 @@ paths:
       security:
         - bearer: []
   /post:
+  # 9 rps write 
     post:
       tags:
         - posts
@@ -205,6 +210,7 @@ paths:
         - vk_auth:
           - write:post
           - read:post
+  # 1527 rps read
     get:
       tags:
         - posts
@@ -257,9 +263,61 @@ paths:
         '400':
           description: Invalid input
         '500':
+          description: Internal Server Error   
+  /post/{id}/comment:
+  # 172 rps write 
+    post:
+      tags:
+        - comments
+      summary: Create comment
+      description: Create comment
+      operationId: createComment
+      requestBody:
+        $ref: '#/components/requestBodies/Comment'
+      responses:
+        '200':
+          description: Successful creating
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment' 
+        '400':
+          description: Invalid input
+        '500':
           description: Internal Server Error
-            
+      security:
+        - vk_auth:
+          - write:comment
+          - read:comment       
+    get:
+      tags:
+        - comments
+      summary: Get comment list
+      description: Get comment list
+      operationId: getCommentList
+      parameters:
+        - name: id
+          in: path
+          description: Post id
+          required: true
+          explode: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful getting
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment' 
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal Server Error
   /profile/{id}/chat:
+  # 77 rps write
     post:
       tags:
         - chats
@@ -291,6 +349,7 @@ paths:
         - vk_auth:
           - write:chat
           - read:chat
+  # 763 rps read
     get:
       tags:
         - chats
@@ -321,6 +380,7 @@ paths:
       security:
         - vk_auth:
           - read:chats
+  # 1527 rps read
   /profile/{id}/chat/{cid}:
     get:
       tags:
@@ -357,6 +417,7 @@ paths:
       security:
         - vk_auth:
           - read:chat
+  # 3819 rps write
   /profile/{id}/chat/{cid}/message:
     post:
       tags:
@@ -434,6 +495,24 @@ components:
         updated_at:
           type: string
           format: date-time
+    Comment:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 123
+        body:
+          type: string
+          example: Comment body
+        profile_id:
+          type: string
+          example: 123
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
     Profile:
       type: object
       properties:
@@ -462,7 +541,24 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Post'
-    
+    Comment:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 123
+        body:
+          type: string
+          example: Comment body
+        profile_id:
+          type: string
+          example: 123
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
     Media:
       type: object
       properties:
@@ -569,6 +665,15 @@ components:
                 type: array
                 items:
                   type: integer
+    Comment:
+      type: object
+      properties:
+        body:
+          type: string
+          example: Comment body
+        profile_id:
+          type: string
+          example: 123
     Chat:
       description: Chat object for creating a new item
       required: true
