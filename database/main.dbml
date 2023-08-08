@@ -44,6 +44,7 @@ Table post {
   like_counter integer
   view_counter integer
   is_draft bool [not null]
+  created_at timestamp [not null]
 
   indexes {
     (profile_id) [name: 'post_profile_id_ix']
