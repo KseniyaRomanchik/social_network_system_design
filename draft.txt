@@ -1,0 +1,61 @@
+87 mil russian auditory
+119 mil world auditory
+
+100 mil mau, 66 mil dau
+50% mau = dau
+468 mil posts and comments per month
+448 mil comments leaved per month
+23 mil posts created per month
+330 mil messages written per day
+
+on average:
+1 account friends are viewed per day
+10 accounts user browses per day
+20 comments leaved under every post
+1 media file is uploaded per 1 post
+1 chats user reads per day
+2 new chats user creates per month
+2 pages of posts user reads per day
+100 friends user has
+
+max size of mediafile 1mb
+max size of message 2000 symbols
+max size of post 20000 symbols
+max size of comment 4000 symbols
+
+comments, posts, messages and mediafiles should be stored all the time
+
+7638+764+1527+763+1527 ~ 12219 read rps
+30+9+9+172+77+3819 ~ 4116 write rps
+
+3819 + 172 rps writes to message DB
+30 rps writes to relation DB
+764 rps reads from relation DB
+
+23 tb for media storage per month
+1 tb for main storage in month
+4 + 1.5 tb for message DB storage per month (-20% compression 4.4 tb)
+311 gb per month or 1 tb for every 100 mil of users for relation DB storage
+
+GET /profile/{id}
+    10 accounts * 1 day * 66*10⁶ dau ~ 7638 rps read 
+POST /profile/{id}/friend 
+    2 friends * 100*10⁶ mau ~ 77 rps write
+GET /profile/{id}/friend 
+    1 user * 66*10⁶ dau ~ 764 rps read  
+POST /media 
+    1 mediafile * 733*10³ posts in a day ~ 9 rps write
+POST /post
+    733*10³ posts in a day ~ 9 rps write
+GET /post 
+    2 pages of posts * 66*10⁶ dau ~ 1527 rps read
+POST /post/{id}/comment 
+    15*10⁶ comments every day ~ 174 rps write
+POST /profile/{id}/chat 
+    100*10⁶ mau * 2 chats every day ~ 77 rps write
+GET /profile/{id}/chat 
+    66*10⁶ dau * 1 list of chat every day ~ 763 rps read
+GET /profile/{id}/chat/{cid} 
+    66*10⁶ dau * 2 chats every day ~ 1527 rps read
+POST /profile/{id}/chat/{cid}/message 
+    66*10⁶ dau * 5 messages ~ 3819 rps write

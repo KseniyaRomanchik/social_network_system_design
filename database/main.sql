@@ -39,7 +39,8 @@ CREATE TABLE IF NOT EXISTS "post" (
   "body" text NOT NULL,
   "profile_id" integer NOT NULL,
   "like_counter" integer NOT NULL DEFAULT 0,
-  "view_counter" integer NOT NULL DEFAULT 0
+  "view_counter" integer NOT NULL DEFAULT 0,
+  "created_at" timestamp NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "media" (
@@ -74,6 +75,8 @@ CREATE TABLE IF NOT EXISTS "chat_profile" (
 CREATE UNIQUE INDEX  IF NOT EXISTS "profile_interest_interest_id_profile_id_ux" ON "profile_interest" ("interest_id", "profile_id");
 
 CREATE INDEX  IF NOT EXISTS "post_profile_id_ix" ON "post" ("profile_id");
+
+CREATE INDEX  IF NOT EXISTS "post_created_at_ix" ON "post" ("created_at");
 
 CREATE INDEX  IF NOT EXISTS "media_post_id_ix" ON "media" ("post_id");
 
