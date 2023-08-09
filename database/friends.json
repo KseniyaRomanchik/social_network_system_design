@@ -1,0 +1,289 @@
+{
+    "nodes": [
+      {
+        "id": "n0",
+        "position": {
+          "x": -57.02310219405914,
+          "y": -55.78611245815216
+        },
+        "caption": "profile",
+        "labels": [],
+        "properties": {
+          "id": "127",
+          "name": "Name4",
+          "photo": "127.jpg"
+        },
+        "style": {}
+      },
+      {
+        "id": "n1",
+        "position": {
+          "x": 31.60789150941259,
+          "y": -168.15505239609138
+        },
+        "caption": "profile",
+        "labels": [],
+        "properties": {
+          "id": "126",
+          "name": "Name3",
+          "photo": "126.jpg"
+        },
+        "style": {}
+      },
+      {
+        "id": "n2",
+        "position": {
+          "x": -179.16720407315927,
+          "y": -168.15505239609138
+        },
+        "caption": "profile",
+        "labels": [],
+        "properties": {
+          "id": "128",
+          "name": "Name5",
+          "photo": "128.jpg"
+        },
+        "style": {}
+      },
+      {
+        "id": "n3",
+        "position": {
+          "x": 120.23888521288431,
+          "y": -55.786112458152175
+        },
+        "caption": "profile",
+        "labels": [],
+        "properties": {
+          "id": "123",
+          "name": "Name",
+          "photo": "123.jpg"
+        },
+        "style": {}
+      },
+      {
+        "id": "n4",
+        "position": {
+          "x": 232.18328660215766,
+          "y": -168.15505239609138
+        },
+        "caption": "profile",
+        "labels": [],
+        "properties": {
+          "id": "125",
+          "name": "Name2",
+          "photo": "125.jpg"
+        },
+        "style": {}
+      },
+      {
+        "id": "n5",
+        "position": {
+          "x": 297.5008726198278,
+          "y": -55.78611245815216
+        },
+        "caption": "profile",
+        "labels": [],
+        "properties": {
+          "id": "124",
+          "name": "Name1",
+          "photo": "124.jpg"
+        },
+        "style": {}
+      }
+    ],
+    "relationships": [
+      {
+        "id": "n0",
+        "fromId": "n0",
+        "toId": "n1",
+        "type": "is friend",
+        "properties": {},
+        "style": {
+          "arrow-color": "#73d8ff"
+        }
+      },
+      {
+        "id": "n1",
+        "fromId": "n0",
+        "toId": "n2",
+        "type": "in love",
+        "properties": {},
+        "style": {
+          "arrow-color": "#f44e3b"
+        }
+      },
+      {
+        "id": "n2",
+        "fromId": "n0",
+        "toId": "n3",
+        "type": "follows",
+        "properties": {},
+        "style": {
+          "arrow-color": "#a4dd00"
+        }
+      },
+      {
+        "id": "n3",
+        "fromId": "n4",
+        "toId": "n1",
+        "type": "is friend",
+        "properties": {},
+        "style": {
+          "arrow-color": "#009ce0"
+        }
+      },
+      {
+        "id": "n4",
+        "fromId": "n4",
+        "toId": "n3",
+        "type": "follows",
+        "properties": {},
+        "style": {
+          "detail-position": "inline",
+          "detail-orientation": "parallel",
+          "arrow-color": "#a4dd00"
+        }
+      },
+      {
+        "id": "n5",
+        "fromId": "n3",
+        "toId": "n5",
+        "type": "follows",
+        "properties": {},
+        "style": {
+          "arrow-color": "#a4dd00"
+        }
+      },
+      {
+        "id": "n6",
+        "fromId": "n3",
+        "toId": "n4",
+        "type": "follows",
+        "properties": {},
+        "style": {
+          "arrow-color": "#a4dd00"
+        }
+      },
+      {
+        "id": "n7",
+        "fromId": "n3",
+        "toId": "n1",
+        "type": "follows",
+        "properties": {},
+        "style": {
+          "arrow-color": "#a4dd00"
+        }
+      },
+      {
+        "id": "n8",
+        "fromId": "n1",
+        "toId": "n3",
+        "type": "in love",
+        "properties": {},
+        "style": {
+          "arrow-color": "#f44e3b"
+        }
+      },
+      {
+        "id": "n9",
+        "fromId": "n3",
+        "toId": "n1",
+        "type": "in love",
+        "properties": {},
+        "style": {
+          "arrow-color": "#f44e3b"
+        }
+      },
+      {
+        "id": "n10",
+        "fromId": "n0",
+        "toId": "n2",
+        "type": "is friend",
+        "properties": {},
+        "style": {
+          "arrow-color": "#73d8ff"
+        }
+      },
+      {
+        "id": "n11",
+        "fromId": "n2",
+        "toId": "n0",
+        "type": "is friend",
+        "properties": {},
+        "style": {
+          "arrow-color": "#73d8ff"
+        }
+      },
+      {
+        "id": "n12",
+        "fromId": "n1",
+        "toId": "n0",
+        "type": "is friend",
+        "properties": {},
+        "style": {}
+      },
+      {
+        "id": "n13",
+        "fromId": "n2",
+        "toId": "n1",
+        "type": "follows",
+        "properties": {},
+        "style": {
+          "arrow-color": "#a4dd00"
+        }
+      }
+    ],
+    "style": {
+      "font-family": "sans-serif",
+      "background-color": "#FAFCFF",
+      "background-image": "",
+      "background-size": "100%",
+      "node-color": "#4C8EDA",
+      "border-width": 2,
+      "border-color": "#2870c2",
+      "radius": 25,
+      "node-padding": 5,
+      "node-margin": 2,
+      "outside-position": "auto",
+      "node-icon-image": "",
+      "node-background-image": "",
+      "icon-position": "inside",
+      "icon-size": 64,
+      "caption-position": "inside",
+      "caption-max-width": 200,
+      "caption-color": "#ffffff",
+      "caption-font-size": 10,
+      "caption-font-weight": "normal",
+      "label-position": "outside",
+      "label-display": "bare",
+      "label-color": "#ffffff",
+      "label-background-color": "#4C8EDA",
+      "label-border-color": "#4C8EDA",
+      "label-border-width": 0,
+      "label-font-size": 10,
+      "label-padding": 2,
+      "label-margin": 2,
+      "directionality": "directed",
+      "detail-position": "inline",
+      "detail-orientation": "parallel",
+      "arrow-width": 1,
+      "arrow-color": "#A5ABB6",
+      "margin-start": 0,
+      "margin-end": 0,
+      "margin-peer": 20,
+      "attachment-start": "normal",
+      "attachment-end": "normal",
+      "relationship-icon-image": "",
+      "type-color": "#000000",
+      "type-background-color": "#ffffff",
+      "type-border-color": "#000000",
+      "type-border-width": 0,
+      "type-font-size": 10,
+      "type-padding": 2,
+      "property-position": "outside",
+      "property-alignment": "colon",
+      "property-color": "#000000",
+      "property-font-size": 10,
+      "property-font-weight": "normal"
+    }
+  }
