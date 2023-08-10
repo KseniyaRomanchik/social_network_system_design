@@ -1,9 +1,22 @@
 // Use DBML to define your database structure
 // Docs: https://dbml.dbdiagram.io/docs
 
+// AP system
+// Eventual consistency
+// Async Logical (Row based) replication
+// Isolation level: Repeatable read
+
+Enum media_type {
+  audio
+  video
+  document
+  image
+}
+
 Table profile {
   id bigint [primary key, increment]
   name varchar [not null]
+  login varchar [not null, unique]
   about varchar
   photo varchar
   city varchar [not null]
@@ -14,15 +27,26 @@ Table interest {
   name varchar [not null, unique]
 }
 
+Table profile_interest {
+  id bigint [primary key, increment]
+  profile_id bigint [not null, ref: > profile.id]
+  interest_id bigint [not null, ref: > interest.id]
+
+  indexes {
+    (interest_id, profile_id) [name: 'profile_interest_interest_id_profile_id_ux', unique]
+  }
+}
+
 Table post {
   id bigint [primary key, increment]
   body text [not null, note: 'Content of the post']
   profile_id bigint [not null, ref: > profile.id]
   like_counter integer
   view_counter integer
+  is_draft bool [not null]
 
   indexes {
-    (profile_id) [name: 'post_profile_id_idx']
+    (profile_id) [name: 'post_profile_id_ix']
   }
 }
 
@@ -30,9 +54,10 @@ Table media {
   id bigint [primary key, increment]
   post_id bigint [not null, ref: > post.id]
   type media_type [not null]
+  url varchar [not null]
 
   indexes {
-    (post_id) [name: 'media_post_id_idx']
+    (post_id) [name: 'media_post_id_ix']
   }
 }
 
@@ -57,7 +82,7 @@ Table post_hashtag {
   post_id bigint [not null, ref: > post.id]
 
   indexes {
-    (post_id, hashtag_id) [name: 'post_hashtag_post_id_hashtag_id_unq', unique]
+    (post_id, hashtag_id) [name: 'post_hashtag_post_id_hashtag_id_ux', unique]
   }
 }
 
@@ -72,13 +97,6 @@ Table chat_profile {
   chat_id bigint [not null, ref: > chat.id]
 
   indexes {
-    (profile_id, chat_id) [unique, name: 'chat_profile_profile_id_chat_id_unq']
+    (profile_id, chat_id) [unique, name: 'chat_profile_profile_id_chat_id_ux']
   }
-}
-
-Enum media_type {
-  audio
-  video
-  document
-  image
 }

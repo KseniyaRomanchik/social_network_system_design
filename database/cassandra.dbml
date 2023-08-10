@@ -1,6 +1,18 @@
+// AP system
+// Routing: coordinator
+// Sharding strategy: linear hash sharding (hybrid between hash and range sharding)
+// Resharding type: consistency hashing
+// Eventual consistency
+
+// replication factor = 2
+// consistency level - ONE (eventual consistency)
+
+// 8 nodes with 1tb ssd
+// + 8 nodes with 1tb hdd every month in 1 datacenter (archive)
+
 Table cassandra.message {
   day int [not null]
-  id "bigint unsigned" [not null]
+  id bigint [not null]
   chat_id integer [not null]
   chat_name integer [not null]
   profile_id integer [not null]
@@ -15,7 +27,7 @@ Table cassandra.message {
 
 Table cassandra.comment {
   day int [not null]
-  id "bigint unsigned" [not null]
+  id bigint [not null]
   post_id integer [not null]
   profile_id integer [not null]
   body varchar [not null]
